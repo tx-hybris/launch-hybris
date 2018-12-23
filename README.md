@@ -5,15 +5,21 @@ Most simple hybris launcher using Assembler or C
 ## Why the ...?
 
 Take it as "educational software".
+
 Take it as "demo software".
+
 Take it as "drunken developer software".
+
 Take it as a joke.
-You mileage may vary.
+
+Your mileage may vary.
 
 ## What does it?
 
 It shows a most simple way to start SAP hybris.
+
 Two versions are provided: A C version and a Assembler version.
+
 (Hey! Didn't you ever dream about starting a very big Java application like Hybris with a small launcher written in Assembler code?)
 
 ## How does it work?
