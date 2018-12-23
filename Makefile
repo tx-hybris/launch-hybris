@@ -107,7 +107,7 @@ infodir=$(prefix)/share/info
 	$(CC) $(ALLCFLAGS) -c -o $@ $<
 
 usage:
-	@echo -e '\n\n === targets: ===\n\nall: build tools\nclean: should be called before commit\nsavets: save timestamps\nrestorets: restore timestamps (after i.e. svn checkout)\n'
+	@echo -e '\n\n === targets: ===\n\nall: build tools\nclean: should be called before commit\nsavets: save timestamps\nrestorets: restore timestamps (after i.e. git checkout)\n'
 	@echo -e '\n === other targets: ===\n\nsstrip'
 	@echo -e '\n\n === sleeping 3 seconds then doing "make all" ==='
 	@sleep 3
@@ -185,7 +185,7 @@ tgz: distclean savets devclean
 	cd ..; \
 	  $(RM) -rf $(DIRNAME)-$(VERSION); \
 	  $(CP) $(DIRNAME) $(DIRNAME)-$(VERSION); \
-	  find $(DIRNAME)-$(VERSION) -name .svn -exec $(RM) -rf {} \; 2>/dev/null; \
+	  find $(DIRNAME)-$(VERSION) -name .git -exec $(RM) -rf {} \; 2>/dev/null; \
 	  find $(DIRNAME)-$(VERSION) -type d -exec rmdir -p {} \; 2>/dev/null; \
 	  tar cf - $(DIRNAME)-$(VERSION) | gzip -9 -f >$(DIRNAME)-$(VERSION).tar.gz
 
@@ -194,7 +194,7 @@ bintgz: tgz all
 	cd ..; \
 	  $(RM) -rf $(DIRNAME)-$(VERSION); \
 	  $(CP) $(DIRNAME) $(DIRNAME)-$(VERSION); \
-	  find $(DIRNAME)-$(VERSION) -name .svn -exec $(RM) -rf {} \; 2>/dev/null; \
+	  find $(DIRNAME)-$(VERSION) -name .git -exec $(RM) -rf {} \; 2>/dev/null; \
 	  find $(DIRNAME)-$(VERSION) -type d -exec rmdir -p {} \; 2>/dev/null; \
 	  gzip -9 -f $(DIRNAME)-$(VERSION)/*/*.1; \
 	  tar cf - \
@@ -212,7 +212,7 @@ rpm: tgz
 	cd $(SPECS_DIR); rpmbuild -ba $(NAME).spec
 
 savets: distclean
-	find . -type f -o -type d|egrep -v "\.svn\/|\.svn$$"|grep -v "\.timestamps"|sort|while read f;do echo $$(date +%s -r "$$f") "$$f";done >.timestamps
+	find . -type f -o -type d|egrep -v "\.git\/|\.git$$"|grep -v "\.timestamps"|sort|while read f;do echo $$(date +%s -r "$$f") "$$f";done >.timestamps
 
 restorets:
 	while read ts f;do touch -d@$$ts "$$f";done<.timestamps
